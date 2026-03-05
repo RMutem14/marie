@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>Pour Marie-Ange Prescillia</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e6c0;
+    --ink: #0d0a06;
+    --cream: #faf6ee;
+    --rose: #b5434a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR - désactivé sur mobile */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: exclusion;
+  }
+  .cursor-trail {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: left 0.12s ease, top 0.12s ease, width 0.4s, height 0.4s;
+  }
+
+  /* CANVAS */
+  #stardust { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+
+  /* HERO SECTION */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 1rem;
+  }
+
+  .hero-bg {
+    position: absolute; inset:0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(180,60,50,0.15) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 80% at 80% 80%, rgba(201,168,76,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 20% 20%, rgba(201,168,76,0.06) 0%, transparent 50%),
+                var(--ink);
+  }
+
+  /* GOLD LINE DIVIDER */
+  .gold-line {
+    width: 100px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.5rem auto;
+  }
+  .gold-line-long {
+    width: 200px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 2rem auto;
+  }
+
+  /* TITLE ANIMATIONS */
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 15vw, 6rem);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    background: linear-gradient(135deg, var(--gold-pale) 0%, var(--gold) 40%, var(--gold-light) 60%, var(--gold-pale) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    line-height: 1.1;
+    animation: shimmer 4s ease-in-out infinite;
+    background-size: 200% 200%;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .hero-subtitle {
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+    font-size: clamp(0.8rem, 4vw, 1.4rem);
+    color: rgba(245,230,192,0.6);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  /* FLOATING ROSE PETALS */
+  .petal {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    font-size: 0;
+    width: 8px; height: 12px;
+    border-radius: 50% 0 50% 0;
+    animation: petalFall linear infinite;
+  }
+
+  @keyframes petalFall {
+    0% { transform: translateY(-20px) rotate(0deg) translateX(0px); opacity: 0.6; }
+    25% { transform: translateY(25vh) rotate(90deg) translateX(30px); }
+    50% { transform: translateY(50vh) rotate(180deg) translateX(-20px); }
+    75% { transform: translateY(75vh) rotate(270deg) translateX(25px); }
+    100% { transform: translateY(110vh) rotate(360deg) translateX(0px); opacity: 0; }
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-80px);
+    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* SECTION STYLES */
+  section { 
+    position: relative; 
+    z-index: 2; 
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* POEM CARD */
+  .poem-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(201,168,76,0.05) 100%);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 2px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  @media (min-width: 768px) {
+    .poem-card {
+      padding: 3rem;
+    }
+  }
+
+  .poem-card::before {
+    content:'';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .poem-card:hover::before { opacity: 1; }
+  .poem-card:hover {
+    border-color: rgba(201,168,76,0.35);
+    transform: translateY(-4px);
+    box-shadow: 0 30px 80px rgba(201,168,76,0.08), 0 0 0 1px rgba(201,168,76,0.1);
+  }
+
+  .poem-number {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .poem-verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 2;
+    color: rgba(245,230,192,0.85);
+  }
+
+  .poem-verse .line {
+    display: block;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .poem-verse .line.shown {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* GENERATE BUTTON */
+  .btn-gold {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 0.8rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    cursor: none;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .btn-gold {
+      font-size: 0.75rem;
+      padding: 1rem 3rem;
+    }
+  }
+
+  .btn-gold::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .btn-gold:hover::before { transform: scaleX(1); }
+  .btn-gold:hover { color: var(--ink); }
+
+  .btn-gold span { position: relative; z-index: 1; }
+
+  /* PARALLAX QUOTE */
+  .parallax-quote {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-align: center;
+    line-height: 1.4;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(201,168,76,0.3);
+    position: relative;
+    padding: 0 1rem;
+  }
+  .parallax-quote .filled {
+    position: absolute; inset:0;
+    color: var(--gold-pale);
+    -webkit-text-stroke: 0;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .parallax-quote.visible .filled {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  /* RDV SECTION */
+  .rdv-form {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .rdv-input {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    padding: 0.75rem 0;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.4s;
+    cursor: none;
+  }
+  
+  @media (min-width: 768px) {
+    .rdv-input {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .rdv-input:focus { border-color: var(--gold); }
+  .rdv-input::placeholder { color: rgba(245,230,192,0.3); font-style: italic; }
+  .rdv-input option { background: #0d0a06; }
+
+  label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.6);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  /* OVERLAY SUCCESS */
+  .success-overlay {
+    position: fixed; inset:0;
+    background: var(--ink);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+  .success-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* COUNTER NUMBERS */
+  .counter-num {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 8vw, 4rem);
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  /* LOADING SCREEN */
+  #loading-screen {
+    position: fixed; inset:0;
+    background: var(--ink);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: opacity 1s ease, transform 1s ease;
+    padding: 1rem;
+  }
+  #loading-screen.gone {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .loading-ring {
+    width: 60px; height: 60px;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ORNAMENT */
+  .ornament {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 5vw, 1.5rem);
+    color: var(--gold);
+    opacity: 0.5;
+    letter-spacing: 0.5em;
+  }
+
+  /* HORIZONTAL SCROLL TEXT */
+  .marquee-wrap { 
+    overflow: hidden; 
+    white-space: nowrap; 
+    position: fixed; 
+    bottom: 0; 
+    left: 0; 
+    right: 0; 
+    z-index: 100; 
+    padding: 0.5rem 0; 
+    border-top: 1px solid rgba(201,168,76,0.05);
+  }
+  
+  .marquee {
+    display: inline-block;
+    animation: marquee 20s linear infinite;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: rgba(201,168,76,0.2);
+    text-transform: uppercase;
+  }
+  
+  @media (min-width: 768px) {
+    .marquee {
+      font-size: 0.65rem;
+    }
+  }
+  
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.5);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  @media (min-width: 768px) {
+    .section-label {
+      font-size: 0.6rem;
+    }
+  }
+
+  /* GLOW EFFECT */
+  .glow-gold {
+    text-shadow: 0 0 40px rgba(201,168,76,0.3), 0 0 80px rgba(201,168,76,0.1);
+  }
+
+  /* DECORATIVE CORNER */
+  .corner-tl, .corner-br {
+    position: absolute;
+    width: 20px; height: 20px;
+  }
+  
+  @media (min-width: 768px) {
+    .corner-tl, .corner-br {
+      width: 30px; height: 30px;
+    }
+  }
+  
+  .corner-tl {
+    top: 1rem; left: 1rem;
+    border-top: 1px solid rgba(201,168,76,0.4);
+    border-left: 1px solid rgba(201,168,76,0.4);
+  }
+  .corner-br {
+    bottom: 1rem; right: 1rem;
+    border-bottom: 1px solid rgba(201,168,76,0.4);
+    border-right: 1px solid rgba(201,168,76,0.4);
+  }
+
+  /* PROGRESS BAR */
+  #progress-bar {
+    position: fixed; top:0; left:0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--rose), var(--gold));
+    z-index: 999;
+    transition: width 0.1s;
+    box-shadow: 0 0 10px rgba(201,168,76,0.5);
+  }
+
+  /* ACTIVE NAV */
+  nav {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    z-index: 100; 
+    padding: 1rem; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(13,10,6,0.9), transparent);
+  }
+  
+  @media (min-width: 768px) {
+    nav {
+      padding: 1.5rem 3rem;
+    }
+  }
+  
+  nav a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(245,230,192,0.4);
+    text-decoration: none;
+    transition: color 0.3s;
+    cursor: none;
+    margin: 0 0.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    nav a {
+      font-size: 0.6rem;
+      margin: 0 1rem;
+    }
+  }
+  
+  nav a:hover { color: var(--gold); }
+
+  /* SPARKLE CLICK */
+  .sparkle-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9997;
+    border-radius: 50%;
+    animation: sparkleOut 0.8s ease-out forwards;
+  }
+  @keyframes sparkleOut {
+    0% { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+    100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; }
+  }
+
+  /* RDV SELECTED INDICATOR */
+  .rdv-indicator {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  .rdv-indicator::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .rdv-indicator.active::before { opacity: 1; }
+
+  /* HEART BEAT */
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.1); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.08); }
+    56% { transform: scale(1); }
+  }
+  .heartbeat { animation: heartbeat 2s ease-in-out infinite; }
+
+  /* UNDERLINE ANIM */
+  .underline-anim {
+    position: relative;
+    display: inline-block;
+  }
+  .underline-anim::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 0%; height: 1px;
+    background: var(--gold);
+    transition: width 1.2s cubic-bezier(0.16,1,0.3,1) 0.3s;
+  }
+  .underline-anim.visible::after { width: 100%; }
+
+  /* RESPONSIVE GRID */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  @media (min-width: 640px) {
+    .stats-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* POEM DOTS */
+  .poem-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* DECORATIVE CIRCLES RESPONSIVE */
+  .deco-circle {
+    position: absolute;
+    border: 1px solid rgba(201,168,76,0.04);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .circle-1 {
+    width: min(300px, 80vw);
+    height: min(300px, 80vw);
+    animation: rotateRing 20s linear infinite;
+  }
+  
+  .circle-2 {
+    width: min(500px, 90vw);
+    height: min(500px, 90vw);
+    animation: rotateRing 30s linear infinite;
+  }
+  
+  .circle-3 {
+    width: min(700px, 95vw);
+    height: min(700px, 95vw);
+    animation: rotateRing 50s linear infinite reverse;
+  }
+
+  /* MUSIC PLAYER STYLES */
+  .music-player {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(13,10,6,0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+  }
+
+  .music-player:hover {
+    border-color: var(--gold);
+    box-shadow: 0 10px 30px rgba(201,168,76,0.2);
+  }
+
+  .music-player button {
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .music-player button:hover {
+    background: rgba(201,168,76,0.2);
+    transform: scale(1.1);
+  }
+
+  .music-player .song-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    color: var(--gold-pale);
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .music-player .volume-slider {
+    width: 60px;
+    height: 3px;
+    background: rgba(201,168,76,0.3);
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .music-player .volume-slider .fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 3px;
+    width: 70%;
+  }
+
+  /* Message d'erreur audio */
+  .audio-error {
+    position: fixed;
+    bottom: 130px;
+    right: 20px;
+    background: rgba(181,67,74,0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    z-index: 1001;
+    display: none;
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--gold);
+  }
+
+  @media (max-width: 768px) {
+    .music-player {
+      bottom: 80px;
+      right: 10px;
+      padding: 6px 12px;
+    }
+    
+    .music-player .song-title {
+      max-width: 80px;
+      font-size: 0.7rem;
+    }
+    
+    .audio-error {
+      bottom: 140px;
+      right: 10px;
+      font-size: 0.7rem;
+    }
+  }
+
+  @keyframes rotateRing {
+    from { transform: translate(-50%,-50%) rotate(0deg); }
+    to { transform: translate(-50%,-50%) rotate(360deg); }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* MOBILE MENU ADAPTATIONS */
+  @media (max-width: 480px) {
+    nav div:first-child {
+      font-size: 0.45rem;
+    }
+    
+    nav div:last-child {
+      gap: 0.5rem;
+    }
+    
+    .hero-title {
+      word-break: break-word;
+    }
+    
+    .poem-card {
+      padding: 1.2rem;
+    }
+  }
+
+  /* CURSOR DISABLED ON TOUCH DEVICES */
+  @media (hover: none) and (pointer: coarse) {
+    .cursor, .cursor-trail {
+      display: none;
+    }
+    
+    body {
+      cursor: auto;
+    }
+    
+    .btn-gold, nav a, .rdv-input {
+      cursor: pointer;
+    }
+  }
+
+  /* LANDSCAPE MODE */
+  @media (orientation: landscape) and (max-height: 600px) {
+    .hero {
+      min-height: 150vh;
+    }
+    
+    section {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+  }
+
+  /* SAFE AREA INSETS */
+  @supports (padding: max(0px)) {
+    nav {
+      padding-top: max(1rem, env(safe-area-inset-top));
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+    }
+    
+    .marquee-wrap {
+      padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div style="font-family:'Cinzel',serif; font-size:clamp(0.5rem, 3vw, 0.65rem); letter-spacing:0.4em; color:rgba(201,168,76,0.5); text-transform:uppercase; margin-bottom:2rem; text-align:center;">Chargement</div>
+  <div class="loading-ring"></div>
+  <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(0.7rem, 4vw, 0.85rem); color:rgba(201,168,76,0.3); margin-top:2rem; text-align:center; padding:0 1rem;">pour Marie-Ange Prescillia</div>
+</div>
+
+<!-- MUSIC PLAYER -->
+<div class="music-player" id="musicPlayer">
+  <button id="playPauseBtn" onclick="togglePlay()">⏸️</button>
+  <div class="song-title" id="songTitle">Musique romantique</div>
+  <button id="volumeBtn" onclick="toggleVolume()">🔊</button>
+  <div class="volume-slider" id="volumeSlider" onclick="setVolume(event)">
+    <div class="fill" id="volumeFill" style="width:70%"></div>
+  </div>
+</div>
+<div class="audio-error" id="audioError">
+  ⚠️ Problème de lecture - Clique sur le bouton lecture
+</div>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar" style="width:0%"></div>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursor-trail"></div>
+
+<!-- STARS CANVAS -->
+<canvas id="stardust"></canvas>
+
+<!-- PETALS -->
+<div id="petals-container"></div>
+
+<!-- NAV -->
+<nav>
+  <div style="font-family:'Cinzel',serif; font-size:clamp(0.45rem, 2.5vw, 0.55rem); letter-spacing:0.4em; color:rgba(201,168,76,0.3); text-transform:uppercase;">M.A.P</div>
+  <div style="display:flex; gap:clamp(0.5rem, 3vw, 3rem); flex-wrap:wrap; justify-content:flex-end;">
+    <a href="#excuses">Excuses</a>
+    <a href="#poemes">Poemes</a>
+    <a href="#rdv">Rendez-vous</a>
+  </div>
+</nav>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    Marie-Ange Prescillia &nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp; Je suis sincèrement désolé &nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp; Pardonne-moi &nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp;
+    Marie-Ange Prescillia &nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp; Je suis sincèrement désolé &nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp; Pardonne-moi &nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp;
+    Marie-Ange Prescillia &nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp; Je suis sincèrement désolé &nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp; Pardonne-moi &nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp;
+    Marie-Ange Prescillia &nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp; Je suis sincèrement désolé &nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp; Pardonne-moi &nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp;
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div style="position:relative; z-index:2; text-align:center; padding:1rem; width:100%; max-width:1200px; margin:0 auto;" id="hero-content">
+    <div class="section-label reveal" style="animation-delay:0.2s">Une lettre de remords</div>
+    <div style="margin:1rem 0;">
+      <div class="hero-title reveal glow-gold" style="animation-delay:0.4s" id="hero-name">Marie-Ange<br>Prescillia</div>
+    </div>
+    <div class="gold-line reveal" style="animation-delay:0.6s"></div>
+    <div class="hero-subtitle reveal" style="animation-delay:0.8s">Je suis venu te demander pardon</div>
+    <div style="margin-top:2rem;" class="reveal" style="animation-delay:1s">
+      <a href="#excuses" class="btn-gold"><span>Lire ma lettre</span></a>
+    </div>
+    <div style="position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);" class="reveal" style="animation-delay:1.2s">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem; animation: float 3s ease-in-out infinite;">
+        <div style="width:1px; height:30px; background:linear-gradient(to bottom, rgba(201,168,76,0.5), transparent);"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Decorative circles responsive -->
+  <div class="deco-circle circle-1"></div>
+  <div class="deco-circle circle-2"></div>
+  <div class="deco-circle circle-3"></div>
+</section>
+
+<!-- EXCUSE SECTION -->
+<section id="excuses" style="padding:4rem 1rem; max-width:900px; margin:0 auto;">
+  <div class="ornament reveal" style="text-align:center;">&#10022; &#10022; &#10022;</div>
+  <div class="gold-line-long reveal"></div>
+
+  <div class="section-label reveal" style="text-align:center;">Ma confession</div>
+  <h2 style="font-family:'Cinzel',serif; font-size:clamp(1.2rem, 6vw, 2.8rem); font-weight:400; text-align:center; color:var(--gold-pale); letter-spacing:0.05em; line-height:1.4; margin-bottom:2rem; padding:0 1rem;" class="reveal underline-anim">
+    Ce que je veux te dire
+  </h2>
+
+  <div style="display:grid; gap:1.5rem;">
+    <div class="poem-card reveal reveal-left">
+      <div class="corner-tl"></div>
+      <div class="corner-br"></div>
+      <div class="poem-number" style="margin-bottom:1rem;">I. Le regret</div>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:clamp(1rem, 4vw, 1.15rem); line-height:1.8; color:rgba(245,230,192,0.8); font-style:italic;">
+        Marie-Ange Prescillia, je t'ai manqué de respect. Je n'aurais jamais dû être aussi tactile avec toi sans m'assurer que tu étais à l'aise. Ton confort et ta dignité méritaient bien plus d'égards que ce que je t'ai accordé ce jour-là. Je ne cherche aucune excuse — seulement la vérité nue de mes torts.
+      </p>
+    </div>
+
+    <div class="poem-card reveal reveal-right">
+      <div class="corner-tl"></div>
+      <div class="corner-br"></div>
+      <div class="poem-number" style="margin-bottom:1rem;">II. La reconnaissance</div>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:clamp(1rem, 4vw, 1.15rem); line-height:1.8; color:rgba(245,230,192,0.8); font-style:italic;">
+        Tu as le droit d'être en colère. Tu as le droit de te sentir offensée. Et tu as surtout le droit de prendre tout le temps qu'il te faut. Je ne viens pas pour effacer ce qui s'est passé, mais pour t'assurer que j'ai compris — vraiment compris — la ligne que j'ai franchie.
+      </p>
+    </div>
+
+    <div class="poem-card reveal reveal-left">
+      <div class="corner-tl"></div>
+      <div class="corner-br"></div>
+      <div class="poem-number" style="margin-bottom:1rem;">III. La promesse</div>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:clamp(1rem, 4vw, 1.15rem); line-height:1.8; color:rgba(245,230,192,0.8); font-style:italic;">
+        Si tu m'accordes une seconde chance, je te promets un respect absolu, une écoute totale. Plus jamais je ne te ferai sentir mal dans ta peau. Chaque espace que tu poses entre nous sera sacré à mes yeux.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PARALLAX QUOTE -->
+<section style="padding:4rem 1rem; overflow:hidden; position:relative;">
+  <div style="position:absolute; inset:0; background: linear-gradient(to right, rgba(201,168,76,0.03) 0%, rgba(181,67,74,0.05) 50%, rgba(201,168,76,0.03) 100%);"></div>
+  <div class="parallax-quote reveal" style="max-width:900px; margin:0 auto; position:relative; z-index:2;" id="big-quote">
+    <span style="position:relative; z-index:1;">&ldquo;&nbsp;Je ne mérite peut-être pas ton pardon,<br class="hidden sm:block">mais je mérite d'avoir essayé.&nbsp;&rdquo;</span>
+    <div class="filled">&ldquo;&nbsp;Je ne mérite peut-être pas ton pardon,<br class="hidden sm:block">mais je mérite d'avoir essayé.&nbsp;&rdquo;</div>
+  </div>
+  <div class="gold-line-long reveal" style="margin-top:2rem;"></div>
+  <div class="section-label reveal" style="text-align:center; margin-top:0.5rem;">— Une vérité simple</div>
+</section>
+
+<!-- POEM GENERATOR -->
+<section id="poemes" style="padding:4rem 1rem; max-width:900px; margin:0 auto;">
+  <div class="ornament reveal" style="text-align:center;">&#10038;</div>
+  <div class="gold-line-long reveal"></div>
+  <div class="section-label reveal" style="text-align:center;">Générateur de poèmes</div>
+  <h2 style="font-family:'Cinzel',serif; font-size:clamp(1.2rem, 6vw, 2.5rem); font-weight:400; text-align:center; color:var(--gold-pale); letter-spacing:0.05em; margin-bottom:1rem;" class="reveal">
+    Mes mots pour toi
+  </h2>
+  <p style="text-align:center; font-family:'Crimson Text',serif; font-style:italic; color:rgba(245,230,192,0.5); font-size:clamp(0.9rem, 3vw, 1.1rem); margin-bottom:2rem; padding:0 1rem;" class="reveal">
+    Chaque poème est unique, comme toi.
+  </p>
+
+  <!-- Poem Display -->
+  <div class="poem-card reveal" id="poem-display" style="min-height:200px; position:relative;">
+    <div class="corner-tl"></div>
+    <div class="corner-br"></div>
+    <div id="poem-title" style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.25em; color:var(--gold); text-transform:uppercase; margin-bottom:1.5rem; opacity:0.7;"></div>
+    <div class="poem-verse" id="poem-verse-container">
+      <span class="line shown" style="color:rgba(245,230,192,0.4); font-style:italic;">Cliquez sur le bouton pour révéler un poème...</span>
+    </div>
+    <div id="poem-ornament" style="margin-top:1.5rem; font-family:'Cinzel',serif; font-size:0.55rem; letter-spacing:0.3em; color:rgba(201,168,76,0.3); opacity:0;"></div>
+  </div>
+
+  <div style="text-align:center; margin-top:2rem;" class="reveal">
+    <button class="btn-gold" id="generate-btn" onclick="generatePoem()">
+      <span id="btn-text">Générer un poème</span>
+    </button>
+  </div>
+
+  <div class="poem-dots" id="poem-dots">
+    <div style="width:5px;height:5px;border-radius:50%;background:rgba(201,168,76,0.2);transition:background 0.3s;" data-dot="0"></div>
+    <div style="width:5px;height:5px;border-radius:50%;background:rgba(201,168,76,0.2);transition:background 0.3s;" data-dot="1"></div>
+    <div style="width:5px;height:5px;border-radius:50%;background:rgba(201,168,76,0.2);transition:background 0.3s;" data-dot="2"></div>
+    <div style="width:5px;height:5px;border-radius:50%;background:rgba(201,168,76,0.2);transition:background 0.3s;" data-dot="3"></div>
+    <div style="width:5px;height:5px;border-radius:50%;background:rgba(201,168,76,0.2);transition:background 0.3s;" data-dot="4"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section style="padding:3rem 1rem; border-top:1px solid rgba(201,168,76,0.08); border-bottom:1px solid rgba(201,168,76,0.08);">
+  <div class="stats-grid" style="max-width:900px; margin:0 auto;">
+    <div class="reveal">
+      <div class="counter-num" data-target="100">0</div>
+      <div style="font-family:'Cinzel',serif; font-size:clamp(0.45rem, 2.5vw, 0.55rem); letter-spacing:0.3em; color:rgba(201,168,76,0.4); text-transform:uppercase; margin-top:0.5rem;">% de sincérité</div>
+    </div>
+    <div class="reveal" style="transition-delay:0.15s">
+      <div class="counter-num" data-target="1">0</div>
+      <div style="font-family:'Cinzel',serif; font-size:clamp(0.45rem, 2.5vw, 0.55rem); letter-spacing:0.3em; color:rgba(201,168,76,0.4); text-transform:uppercase; margin-top:0.5rem;">Seul regret</div>
+    </div>
+    <div class="reveal" style="transition-delay:0.3s">
+      <div class="counter-num" data-target="0">0</div>
+      <div style="font-family:'Cinzel',serif; font-size:clamp(0.45rem, 2.5vw, 0.55rem); letter-spacing:0.3em; color:rgba(201,168,76,0.4); text-transform:uppercase; margin-top:0.5rem;">Excuse à moitié</div>
+    </div>
+  </div>
+</section>
+
+<!-- RDV SECTION -->
+<section id="rdv" style="padding:4rem 1rem; max-width:700px; margin:0 auto;">
+  <div class="ornament reveal" style="text-align:center;">&#10022;</div>
+  <div class="gold-line-long reveal"></div>
+  <div class="section-label reveal" style="text-align:center;">Une dernière chose</div>
+  <h2 style="font-family:'Cinzel',serif; font-size:clamp(1.2rem, 6vw, 2.5rem); font-weight:400; text-align:center; color:var(--gold-pale); letter-spacing:0.05em; margin-bottom:1rem; line-height:1.4;" class="reveal">
+    M'accorderais-tu<br>un moment ?
+  </h2>
+  <p style="text-align:center; font-family:'Crimson Text',serif; font-style:italic; color:rgba(245,230,192,0.5); font-size:clamp(0.9rem, 3vw, 1.1rem); margin-bottom:2rem; padding:0 1rem;" class="reveal">
+    Pas pour plaider ma cause &mdash; juste pour te regarder dans les yeux et te dire pardon.
+  </p>
+
+  <!-- Formulaire avec FormSubmit.co - SANS EMAIL -->
+  <form class="rdv-form" action="https://formsubmit.co/emmanuelmutombo99@gmail.com" method="POST" onsubmit="return validateForm()">
+    <!-- Protection anti-spam (optionnel mais recommandé) -->
+    <input type="hidden" name="_captcha" value="false">
+    <!-- Sujet de l'email -->
+    <input type="hidden" name="_subject" value="💝 Nouveau rendez-vous de Marie-Ange Prescillia">
+    <!-- Format de réponse -->
+    <input type="hidden" name="_template" value="table">
+
+    <div style="display:grid; gap:2rem;" class="reveal">
+      <div class="rdv-indicator" id="ind-lieu">
+        <label>Lieu du rendez-vous *</label>
+        <select class="rdv-input" name="Lieu" id="rdv-lieu" required onchange="updateIndicator('ind-lieu')">
+          <option value="">Choisir un lieu...</option>
+          <option value="cafe">Un café tranquille</option>
+          <option value="parc">Un parc au soleil</option>
+          <option value="resto">Un restaurant</option>
+          <option value="balade">Une balade</option>
+          <option value="autre">Autre lieu de ton choix</option>
+        </select>
+      </div>
+
+      <div class="rdv-indicator" id="ind-date">
+        <label>Date souhaitée *</label>
+        <input type="date" class="rdv-input" name="Date" id="rdv-date" required onchange="updateIndicator('ind-date')">
+      </div>
+
+      <div class="rdv-indicator" id="ind-heure">
+        <label>Heure *</label>
+        <input type="time" class="rdv-input" name="Heure" id="rdv-heure" required onchange="updateIndicator('ind-heure')">
+      </div>
+      
+      <div class="rdv-indicator" id="ind-mot">
+        <label>Un mot de ta part (optionnel)</label>
+        <input type="text" class="rdv-input" name="Message" id="rdv-msg" placeholder="Ta réponse..." onchange="updateIndicator('ind-mot')">
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:3rem;" class="reveal">
+      <button type="submit" class="btn-gold">
+        <span>Confirmer le rendez-vous</span>
+      </button>
+    </div>
+  </form>
+  <div id="form-status" style="text-align:center; margin-top:1rem; font-family:'Cormorant Garamond',serif; color:var(--gold); min-height:2rem; font-size:clamp(0.8rem, 3vw, 1rem);"></div>
+</section>
+
+<!-- FOOTER -->
+<footer style="padding:2rem 1rem 5rem; text-align:center; position:relative; z-index:2;">
+  <div class="ornament" style="opacity:0.3;">&#10022; &#10022; &#10022;</div>
+  <p style="font-family:'Crimson Text',serif; font-style:italic; font-size:clamp(0.7rem, 3vw, 0.85rem); color:rgba(245,230,192,0.2); margin-top:1rem; letter-spacing:0.1em; padding:0 1rem;">
+    Fait avec remords sincère &mdash; Pour Marie-Ange Prescillia
+  </p>
+</footer>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="success-overlay">
+  <canvas id="confetti-canvas" style="position:absolute; inset:0; width:100%; height:100%;"></canvas>
+  <div style="position:relative; z-index:2; text-align:center; padding:1rem; max-width:600px; margin:0 auto;">
+    <div class="ornament heartbeat" style="font-size:clamp(1.5rem, 8vw, 2rem); opacity:1; color:var(--gold); margin-bottom:1.5rem;">&#10022;</div>
+    <div style="font-family:'Cinzel',serif; font-size:clamp(0.5rem, 3vw, 0.65rem); letter-spacing:0.4em; color:rgba(201,168,76,0.5); text-transform:uppercase; margin-bottom:1rem;">Merci</div>
+    <h2 style="font-family:'Cinzel',serif; font-size:clamp(1.5rem, 8vw, 3.5rem); font-weight:400; color:var(--gold-pale); letter-spacing:0.05em; line-height:1.3; margin-bottom:1.5rem;">
+      Rendez-vous<br>enregistré
+    </h2>
+    <div class="gold-line-long"></div>
+    <div id="rdv-summary" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(0.9rem, 4vw, 1.2rem); color:rgba(245,230,192,0.7); line-height:1.8; margin:1.5rem 0; word-break:break-word;"></div>
+    <div class="gold-line-long"></div>
+    <p style="font-family:'Crimson Text',serif; font-style:italic; color:rgba(245,230,192,0.4); font-size:clamp(0.8rem, 3vw, 1rem); margin-top:1.5rem; padding:0 1rem;">
+      Rendez-vous envoyé à emmanuelmutombo99@gmail.com
+    </p>
+    <button class="btn-gold" style="margin-top:1.5rem;" onclick="closeSuccess()">
+      <span>Fermer</span>
+    </button>
+  </div>
+</div>
+
+<style>
+@keyframes rotateRing {
+  from { transform: translate(-50%,-50%) rotate(0deg); }
+  to { transform: translate(-50%,-50%) rotate(360deg); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+</style>
+
+<script>
+// AUDIO PLAYER SCRIPT - AVEC FALLBACK
+let audio = new Audio();
+let isPlaying = false; // Commence en pause pour éviter les problèmes
+let isMuted = false;
+let volume = 0.7;
+let retryCount = 0;
+const maxRetries = 3;
+
+// Liste de chansons libres de droits qui fonctionnent à coup sûr
+const playlist = [
+  {
+    title: "Romantic Piano - Chopin",
+    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+  },
+  {
+    title: "Classical Guitar",
+    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+  },
+  {
+    title: "Love Theme",
+    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+  }
+];
+
+let currentSongIndex = 0;
+
+function initAudio() {
+  audio.src = playlist[currentSongIndex].url;
+  audio.volume = volume;
+  document.getElementById('songTitle').textContent = playlist[currentSongIndex].title;
+  
+  audio.addEventListener('ended', function() {
+    // Passer à la chanson suivante automatiquement
+    currentSongIndex = (currentSongIndex + 1) % playlist.length;
+    audio.src = playlist[currentSongIndex].url;
+    document.getElementById('songTitle').textContent = playlist[currentSongIndex].title;
+    if (isPlaying) {
+      audio.play().catch(handlePlayError);
+    }
+  });
+
+  audio.addEventListener('error', function(e) {
+    console.log("Erreur de chargement audio", e);
+    document.getElementById('audioError').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('audioError').style.display = 'none';
+    }, 3000);
+    
+    // Essayer la chanson suivante en cas d'erreur
+    if (retryCount < maxRetries) {
+      retryCount++;
+      currentSongIndex = (currentSongIndex + 1) % playlist.length;
+      audio.src = playlist[currentSongIndex].url;
+      document.getElementById('songTitle').textContent = playlist[currentSongIndex].title;
+      if (isPlaying) {
+        audio.play().catch(handlePlayError);
+      }
+    }
+  });
+
+  // Ne pas lancer automatiquement à cause des restrictions navigateur
+  // L'utilisateur devra cliquer sur play
+}
+
+function handlePlayError(error) {
+  console.log("Erreur de lecture:", error);
+  document.getElementById('audioError').style.display = 'block';
+  setTimeout(() => {
+    document.getElementById('audioError').style.display = 'none';
+  }, 3000);
+  isPlaying = false;
+  document.getElementById('playPauseBtn').textContent = '▶️';
+}
+
+function togglePlay() {
+  if (isPlaying) {
+    audio.pause();
+    document.getElementById('playPauseBtn').textContent = '▶️';
+    isPlaying = false;
+  } else {
+    audio.play()
+      .then(() => {
+        document.getElementById('playPauseBtn').textContent = '⏸️';
+        isPlaying = true;
+        document.getElementById('audioError').style.display = 'none';
+      })
+      .catch(handlePlayError);
+  }
+}
+
+function toggleVolume() {
+  isMuted = !isMuted;
+  audio.muted = isMuted;
+  document.getElementById('volumeBtn').textContent = isMuted ? '🔇' : '🔊';
+}
+
+function setVolume(event) {
+  const slider = document.getElementById('volumeSlider');
+  const rect = slider.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const width = rect.width;
+  volume = Math.max(0, Math.min(1, x / width));
+  audio.volume = volume;
+  document.getElementById('volumeFill').style.width = (volume * 100) + '%';
+  if (volume === 0) {
+    document.getElementById('volumeBtn').textContent = '🔇';
+    isMuted = true;
+    audio.muted = true;
+  } else {
+    document.getElementById('volumeBtn').textContent = '🔊';
+    isMuted = false;
+    audio.muted = false;
+  }
+}
+
+// Initialiser l'audio au chargement
+window.addEventListener('load', () => {
+  initAudio();
+});
+
+// Détection de l'interaction utilisateur pour débloquer l'audio
+document.addEventListener('click', function firstClick() {
+  // On ne lance pas automatiquement, on laisse l'utilisateur cliquer sur play
+  document.removeEventListener('click', firstClick);
+}, { once: true });
+
+// ─── LOADING ───────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loading-screen').classList.add('gone');
+    initAnimations();
+  }, 1800);
+});
+
+// ─── CURSOR ────────────────────────────────────────────────────────────────
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursor-trail');
+let mx = 0, my = 0;
+
+// Only enable custom cursor on non-touch devices
+if (!('ontouchstart' in window)) {
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+    trail.style.left = mx + 'px';
+    trail.style.top = my + 'px';
+  });
+
+  document.querySelectorAll('a, button, select, input').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px';
+      cursor.style.height = '20px';
+      trail.style.width = '60px';
+      trail.style.height = '60px';
+      trail.style.borderColor = 'rgba(201,168,76,0.7)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px';
+      cursor.style.height = '12px';
+      trail.style.width = '36px';
+      trail.style.height = '36px';
+      trail.style.borderColor = 'rgba(201,168,76,0.4)';
+    });
+  });
+} else {
+  cursor.style.display = 'none';
+  trail.style.display = 'none';
+}
+
+// ─── SPARKLE ON CLICK ──────────────────────────────────────────────────────
+document.addEventListener('click', e => {
+  const colors = ['#c9a84c','#e8c97a','#f5e6c0','#b5434a'];
+  for (let i = 0; i < 10; i++) {
+    const sp = document.createElement('div');
+    sp.classList.add('sparkle-particle');
+    const size = Math.random() * 6 + 2;
+    const tx = (Math.random() - 0.5) * 120;
+    const ty = (Math.random() - 0.5) * 120;
+    sp.style.cssText = `
+      width:${size}px; height:${size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      left:${e.clientX}px; top:${e.clientY}px;
+      --tx:${tx}px; --ty:${ty}px;
+      animation-duration:${Math.random()*0.5+0.5}s;
+    `;
+    document.body.appendChild(sp);
+    sp.addEventListener('animationend', () => sp.remove());
+  }
+});
+
+// ─── STARDUST CANVAS ───────────────────────────────────────────────────────
+const canvas = document.getElementById('stardust');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const stars = Array.from({length:150}, () => ({
+  x: Math.random() * window.innerWidth,
+  y: Math.random() * window.innerHeight,
+  r: Math.random() * 1.2 + 0.2,
+  a: Math.random(),
+  speed: Math.random() * 0.005 + 0.002,
+  drift: (Math.random()-0.5)*0.1
+}));
+
+function drawStars() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s => {
+    s.a += s.speed;
+    s.x += s.drift;
+    if (s.x > canvas.width) s.x = 0;
+    if (s.x < 0) s.x = canvas.width;
+    const alpha = (Math.sin(s.a) * 0.5 + 0.5) * 0.6;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(201,168,76,${alpha})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// ─── PETALS ────────────────────────────────────────────────────────────────
+const petalColors = [
+  'rgba(181,67,74,0.5)', 'rgba(201,168,76,0.3)',
+  'rgba(245,230,192,0.3)', 'rgba(181,67,74,0.3)'
+];
+
+function createPetal() {
+  const p = document.createElement('div');
+  p.classList.add('petal');
+  const size = Math.random() * 8 + 4;
+  p.style.cssText = `
+    left: ${Math.random()*100}%;
+    width: ${size}px;
+    height: ${size*1.5}px;
+    background: ${petalColors[Math.floor(Math.random()*petalColors.length)]};
+    animation-duration: ${Math.random()*10+8}s;
+    animation-delay: ${Math.random()*5}s;
+    border-radius: ${Math.random()>0.5 ? '50% 0 50% 0' : '0 50% 0 50%'};
+  `;
+  document.getElementById('petals-container').appendChild(p);
+  setTimeout(() => p.remove(), 18000);
+}
+setInterval(createPetal, 400);
+
+// ─── SCROLL REVEAL ─────────────────────────────────────────────────────────
+function initAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Trigger counter
+        const num = entry.target.querySelector ? entry.target.querySelector('[data-target]') : null;
+      }
+    });
+  }, { threshold: 0.15, rootMargin:'0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Counter observer
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.5 });
+  document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
+}
+
+// ─── COUNTER ───────────────────────────────────────────────────────────────
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  let current = 0;
+  const step = target / 60;
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) { current = target; clearInterval(timer); }
+    el.textContent = Math.floor(current);
+  }, 25);
+}
+
+// ─── SCROLL PROGRESS ───────────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = (window.scrollY / max) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+});
+
+// ─── POEMS ─────────────────────────────────────────────────────────────────
+const poems = [
+  {
+    title: 'I — La Faute',
+    verses: [
+      'Marie-Ange, j\'ai franchi une frontière',
+      'que tu avais tracée en silence,',
+      'et mon inattention, trop légère,',
+      'a brisé notre fragile présence.',
+      '',
+      'Je ne cherche pas à me défendre —',
+      'les mots que j\'aurais dû te tendre',
+      'restent gravés dans ma conscience',
+      'comme les témoins de mon imprudence.',
+    ]
+  },
+  {
+    title: 'II — Le Silence Éloquent',
+    verses: [
+      'Dans le silence qui a suivi ce jour,',
+      'j\'ai entendu tout ce que tu n\'as pas dit.',
+      'Chaque regard évité, chaque détour —',
+      'autant de phrases que ma faute a écrit.',
+      '',
+      'Prescillia, ton âme vaut bien plus',
+      'que mes maladresses et mes excès.',
+      'Apprends-moi tes limites, tes refus —',
+      'je promets d\'en faire mes balises.',
+    ]
+  },
+  {
+    title: 'III — L\'Espace Sacré',
+    verses: [
+      'Entre nous, il existait un espace',
+      'que j\'aurais dû garder précieux et pur.',
+      'J\'y ai posé les mains sans que tu laisses',
+      'le temps à ton consentement de mûrir.',
+      '',
+      'Marie-Ange, tu méritais ce silence,',
+      'ce droit de dire non sans le formuler.',
+      'Je t\'offre aujourd\'hui cette évidence :',
+      'ton espace d\'abord, tout le reste après.',
+    ]
+  },
+  {
+    title: 'IV — Le Pardon Suspendu',
+    verses: [
+      'Je n\'attends pas ton pardon comme un dû,',
+      'je le reçois s\'il vient, comme une grâce.',
+      'Mais si tu choisis de rester perdue',
+      'dans la distance que ma faute a tracée —',
+      '',
+      'je respecterai ce choix, ce silence,',
+      'comme j\'aurais dû respecter ta présence.',
+      'Le regret seul me sert de pénitence,',
+      'et ta paix, de ma seule récompense.',
+    ]
+  },
+  {
+    title: 'V — La Promesse Solennelle',
+    verses: [
+      'Si demain tu me rouvres ta confiance,',
+      'je ferai de chaque geste une question,',
+      'de chaque regard une révérence,',
+      'de chaque instant — une permission.',
+      '',
+      'Marie-Ange Prescillia, ton prénom',
+      'résonne en moi comme un serment solennel :',
+      'ne plus jamais être la raison',
+      'qui trouble la paix de quelqu\'un comme toi.',
+    ]
+  }
+];
+
+let currentPoem = -1;
+let isGenerating = false;
+
+function generatePoem() {
+  if (isGenerating) return;
+  isGenerating = true;
+
+  const btn = document.getElementById('generate-btn');
+  const btnText = document.getElementById('btn-text');
+  btnText.textContent = 'Révélation...';
+
+  const nextIdx = (currentPoem + 1) % poems.length;
+  currentPoem = nextIdx;
+
+  const poem = poems[currentPoem];
+  const container = document.getElementById('poem-verse-container');
+  const titleEl = document.getElementById('poem-title');
+  const ornament = document.getElementById('poem-ornament');
+
+  // Reset
+  container.innerHTML = '';
+  ornament.style.opacity = '0';
+  titleEl.style.opacity = '0';
+
+  // Fade out
+  document.getElementById('poem-display').style.opacity = '0.3';
+  document.getElementById('poem-display').style.transform = 'translateY(10px)';
+  document.getElementById('poem-display').style.transition = 'all 0.4s';
+
+  setTimeout(() => {
+    titleEl.textContent = poem.title;
+    titleEl.style.transition = 'opacity 0.5s';
+    titleEl.style.opacity = '1';
+
+    document.getElementById('poem-display').style.opacity = '1';
+    document.getElementById('poem-display').style.transform = 'translateY(0)';
+
+    poem.verses.forEach((line, i) => {
+      const span = document.createElement('span');
+      span.classList.add('line');
+      span.textContent = line === '' ? '\u00A0' : line;
+      container.appendChild(span);
+
+      setTimeout(() => {
+        span.classList.add('shown');
+      }, i * 140 + 200);
+    });
+
+    // Show ornament after all verses
+    setTimeout(() => {
+      ornament.textContent = '— ' + (currentPoem+1) + ' / ' + poems.length;
+      ornament.style.transition = 'opacity 0.8s';
+      ornament.style.opacity = '1';
+
+      // Update dots
+      document.querySelectorAll('[data-dot]').forEach((dot, i) => {
+        dot.style.background = i === currentPoem
+          ? 'rgba(201,168,76,0.8)'
+          : 'rgba(201,168,76,0.2)';
+      });
+
+      btnText.textContent = currentPoem < poems.length - 1 ? 'Poème suivant' : 'Recommencer';
+      isGenerating = false;
+    }, poem.verses.length * 140 + 500);
+
+  }, 400);
+}
+
+// ─── RDV INDICATOR ─────────────────────────────────────────────────────────
+function updateIndicator(id) {
+  document.getElementById(id).classList.add('active');
+}
+
+// ─── VALIDATE FORM ─────────────────────────────────────────────────────────
+function validateForm() {
+  const lieu = document.getElementById('rdv-lieu').value;
+  const date = document.getElementById('rdv-date').value;
+  const heure = document.getElementById('rdv-heure').value;
+
+  if (!lieu || !date || !heure) {
+    // Shake effect
+    const section = document.getElementById('rdv');
+    section.style.transform = 'translateX(-8px)';
+    setTimeout(() => {
+      section.style.transition = 'transform 0.3s';
+      section.style.transform = 'translateX(8px)';
+      setTimeout(() => {
+        section.style.transform = 'translateX(-4px)';
+        setTimeout(() => {
+          section.style.transform = 'translateX(0)';
+        }, 100);
+      }, 100);
+    }, 100);
+    
+    document.getElementById('form-status').innerHTML = '⚠️ Tous les champs obligatoires doivent être remplis';
+    return false;
+  }
+
+  const lieuLabels = {
+    'cafe':'Un café tranquille','parc':'Un parc au soleil',
+    'resto':'Un restaurant','balade':'Une balade','autre':'Ton lieu de choix'
+  };
+
+  const dateObj = new Date(date);
+  const dateStr = dateObj.toLocaleDateString('fr-FR', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const msg = document.getElementById('rdv-msg').value;
+
+  document.getElementById('rdv-summary').innerHTML = `
+    <strong style="color:var(--gold-light);">Lieu :</strong> ${lieuLabels[lieu] || lieu}<br>
+    <strong style="color:var(--gold-light);">Date :</strong> ${dateStr}<br>
+    <strong style="color:var(--gold-light);">Heure :</strong> ${heure}<br>
+    ${msg ? `<strong style="color:var(--gold-light);">Ton mot :</strong> "${msg}"` : ''}
+  `;
+
+  document.getElementById('form-status').innerHTML = 'Envoi en cours...';
+  
+  // Le formulaire sera soumis normalement à FormSubmit.co
+  // On affiche le succès après un petit délai
+  setTimeout(() => {
+    document.getElementById('success-overlay').classList.add('active');
+    launchConfetti();
+    document.getElementById('form-status').innerHTML = '';
+  }, 1000);
+  
+  return true; // Permet la soumission normale du formulaire
+}
+
+function closeSuccess() {
+  document.getElementById('success-overlay').classList.remove('active');
+}
+
+// ─── CONFETTI ──────────────────────────────────────────────────────────────
+function launchConfetti() {
+  const c = document.getElementById('confetti-canvas');
+  const cx = c.getContext('2d');
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
+
+  const particles = Array.from({length:120}, () => ({
+    x: Math.random() * c.width,
+    y: -10,
+    vx: (Math.random()-0.5)*3,
+    vy: Math.random()*3+1,
+    size: Math.random()*6+2,
+    color: ['#c9a84c','#e8c97a','#f5e6c0','#b5434a','#faf6ee'][Math.floor(Math.random()*5)],
+    rot: Math.random()*360,
+    rotSpeed: (Math.random()-0.5)*5,
+    alpha: 1
+  }));
+
+  let frame = 0;
+  function drawConfetti() {
+    cx.clearRect(0,0,c.width,c.height);
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.05;
+      p.rot += p.rotSpeed;
+      if (p.y > c.height - 100) p.alpha -= 0.01;
+      cx.save();
+      cx.globalAlpha = Math.max(0, p.alpha);
+      cx.translate(p.x, p.y);
+      cx.rotate(p.rot * Math.PI/180);
+      cx.fillStyle = p.color;
+      cx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+      cx.restore();
+    });
+    frame++;
+    if (frame < 250) requestAnimationFrame(drawConfetti);
+    else cx.clearRect(0,0,c.width,c.height);
+  }
+  drawConfetti();
+}
+
+// ─── NAME TYPEWRITER EFFECT ────────────────────────────────────────────────
+const nameEl = document.getElementById('hero-name');
+const fullName = 'Marie-Ange\nPrescillia';
+nameEl.innerHTML = '';
+
+let charIdx = 0;
+function typewriterName() {
+  if (charIdx < fullName.length) {
+    const ch = fullName[charIdx];
+    if (ch === '\n') {
+      nameEl.innerHTML += '<br>';
+    } else {
+      nameEl.innerHTML += `<span style="opacity:0;animation:fadeInChar 0.3s ease forwards;">${ch}</span>`;
+    }
+    charIdx++;
+    setTimeout(typewriterName, 80);
+  }
+}
+
+const style = document.createElement('style');
+style.textContent = `@keyframes fadeInChar { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }`;
+document.head.appendChild(style);
+
+setTimeout(typewriterName, 2200);
+</script>
+</body>
+</html>
